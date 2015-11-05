@@ -15,8 +15,8 @@ namespace ReduceJsonTraffic.Controllers
         {
             var messages = new[]
             {
-                new Message(),
-                new Message()
+                Message.Factory(),
+                Message.Factory()
             };
 
             return messages;
@@ -25,10 +25,8 @@ namespace ReduceJsonTraffic.Controllers
         // GET api/default/5
         public Message Get(int id)
         {
-            var message = new Message
-            {
-                AnInt = id
-            };
+            var message = Message.Factory();
+            message.AnInt = id;
 
             return message;
         }

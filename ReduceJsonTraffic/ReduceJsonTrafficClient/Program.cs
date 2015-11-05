@@ -21,14 +21,16 @@ namespace ReduceJsonTrafficClient
         private static async Task RunAsync()
         {
             var httpClient = new HttpClient();
-
+            
             var defaultData = await httpClient.GetStringAsync(new Uri(BaseUrl + "default"));
             Console.WriteLine("default size: {0}b ({1:F}%)", defaultData.Length, Reduction(defaultData, defaultData));
             var defaultMessages = JsonConvert.DeserializeObject<Message[]>(defaultData);
 
+            var settings = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate };
+
             var defaultValueHandlingData = await httpClient.GetStringAsync(new Uri(BaseUrl + "defaultvaluehandling"));
             Console.WriteLine("default value handling size: {0}b ({1:F}%)", defaultValueHandlingData.Length, Reduction(defaultData, defaultValueHandlingData));
-            var defaultHandlingMessages = JsonConvert.DeserializeObject<Message[]>(defaultValueHandlingData);
+            var defaultHandlingMessages = JsonConvert.DeserializeObject<Message[]>(defaultValueHandlingData, settings);
         }
 
         private static double Reduction(string original, string @new)
