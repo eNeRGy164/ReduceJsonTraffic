@@ -1,10 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace ReduceJsonTrafficModels
 {
     public class Message
     {
+        public Message()
+        {
+            SomeObjects = new SomeObject[0];
+            SomeEmptyObjects = new SomeObject[0];
+        }
+
         public string AString { get; set; }
 
         public int AnInt { get; set; }
@@ -14,6 +21,7 @@ namespace ReduceJsonTrafficModels
 
         public byte? ANullableByte { get; set; }
 
+        [DefaultValue(new string[] {})]
         public string[] AStringArray { get; set; }
 
         public Uri NoUri { get; set; }
@@ -28,8 +36,10 @@ namespace ReduceJsonTrafficModels
 
         public SomeObject SingleObject { get; set; }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public SomeObject[] SomeEmptyObjects { get; set; }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public SomeObject[] SomeObjects { get; set; }
 
         public static Message Factory()
